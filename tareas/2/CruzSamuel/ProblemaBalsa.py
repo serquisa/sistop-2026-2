@@ -1,9 +1,16 @@
+import threading
+import time
+import random
+from enum import Enum
+
 class Bando(Enum):
     HACKER = "Hacker"
     SERF = "Serf"
 
 class Balsa:
-    def __init__(self):     
+    def __init__(self):   
+        self.mutex = threading.Lock()
+        self.condicion = threading.Condition(self.mutex)  
         self.hackers_esperando = 0
         self.serfs_esperando = 0
         self.grupo_actual = []
@@ -39,6 +46,8 @@ class Balsa:
         self.allowed_serfs = sum(1 for b in self.grupo_actual if b == Bando.SERF)       
         
         print(f"Grupo formado: {[b.value for b in self.grupo_actual]}")
+        
+
 def main():
     print("SIMULACIÓN CRUCE DEL RIO - PROBLEMA DE SINCRONIZACIÓN")
     print("=" * 50)
