@@ -44,5 +44,13 @@ class Profesor(th.Thread):
 		self.condicion = condicion
 
 	def run(self):
-		print("s")		
-			
+		with self.condicion:
+			while True:
+				print(f"El Profesor está resolviendo una duda")
+				
+				time.sleep(1)
+
+				self.condicion.notify()
+				print(f"El Profesor terminó con una duda")
+
+				self.condicion.wait()			
